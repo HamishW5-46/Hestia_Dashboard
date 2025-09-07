@@ -16,9 +16,6 @@ exec(HESTIA_CMD . "v-list-user-stats $user json", $output, $return_var);
 $panel[$user] = json_decode(implode("", $output), true);
 unset($output);
 
-
-
-
 // Render page
 render_page($user, $template, "list_dashboard");
 ?>
