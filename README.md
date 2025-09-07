@@ -7,7 +7,7 @@ Upload the theme manager and run `./install.sh`
 then upload the glass theme or create your own the manager also comes with an un-install script.
 Next
 There are a few files that must be modified manually (the script does not handle these changes yet).
-
+I have included them under HestiaMod if you do not want to manualy edit them.
 ---
 
 ### 1. Modify `/usr/local/hestia/web/list/index.php`
