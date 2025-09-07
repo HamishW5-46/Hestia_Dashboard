@@ -3,11 +3,15 @@
 This is a dashboard switcher for Hestia Control Panel that uses the CLI to switch dashboard themes.
 
 ## Installation
-Upload the theme manager and run `./install.sh`
-then upload the glass theme or create your own the manager also comes with an un-install script.
-Next
+```bash
+./install.sh
+```
+Then upload the Glass theme (or create your own).
+The Theme Manager also comes with an uninstall script if needed.
+
+2. Manual File Modifications
 There are a few files that must be modified manually (the script does not handle these changes yet).
-I have included them under HestiaMod if you do not want to manualy edit them.
+If you do not want to edit them yourself, I have included pre-modified versions under the HestiaMod folder.
 ---
 
 ### 1. Modify `/usr/local/hestia/web/list/index.php`
