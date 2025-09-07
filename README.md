@@ -9,7 +9,7 @@ This is a dashboard switcher for Hestia Control Panel that uses the CLI to switc
 Then upload the Glass theme (or create your own).
 The Theme Manager also comes with an uninstall script if needed.
 
-2. Manual File Modifications
+Manual File Modifications
 There are a few files that must be modified manually (the script does not handle these changes yet).
 If you do not want to edit them yourself, I have included pre-modified versions under the HestiaMod folder.
 ---
@@ -270,4 +270,7 @@ body {
 
 ✅ After completing these steps, HestiaCP will load the new Dashboard page as the default instead of the Users page.
 
-
+## UN-Install
+```bash
+./uninstall.sh
+```
