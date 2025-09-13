@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Hestia Theme Manager Uninstallation Script
-# Version: 1.0.0
+# Version: 1.0.1
 
 set -e
 
