@@ -125,6 +125,17 @@ class HestiaThemeManager {
         $this->theme_path  = '/usr/local/hestia/web/themes';
         $this->loadConfig();
     }
+    /**
+     * Simple logger helper (CLI echoes; web logs to error_log)
+     */
+    private function log($message, $level = 'INFO') {
+        if (php_sapi_name() === 'cli') {
+            echo '[' . $level . '] ' . $message . "\n";
+        } else {
+            error_log('[HestiaThemeManager][' . $level . "] " . $message);
+        }
+    }
+
     
     /**
      * Install the theme manager plugin
@@ -348,6 +359,57 @@ class HestiaThemeManager {
             json_encode($config, JSON_PRETTY_PRINT)
         );
     }
+    /**
+     * Create minimal web interface files for the Theme Manager.
+     * This avoids fatal errors if UI assets are missing; it writes a simple page
+     * under the plugin path that lists available themes.
+     */
+    private function createThemeInterface() {
+        $web_dir = $this->plugin_path . '/web';
+        if (!is_dir($web_dir)) {
+            mkdir($web_dir, 0755, true);
+        }
+        $index = <<<'PHP'
+<?php
+// Minimal Theme Manager UI (placeholder)
+// Lists themes and provides a basic apply action via CLI hint.
+require_once __DIR__ . '/../hestia_theme_manager.php';
+$mgr = new HestiaThemeManager();
+$themes = $mgr->getAvailableThemes();
+$current = $mgr->getCurrentTheme();
+?><!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Hestia Theme Manager</title>
+<style>
+body { font-family: sans-serif; margin: 2rem; }
+h1 { margin-top: 0; }
+code { background: #f3f3f3; padding: 2px 4px; }
+.current { font-weight: bold; }
+</style>
+</head>
+<body>
+<h1>Hestia Theme Manager</h1>
+<p>Current theme: <span class="current"><?php echo htmlspecialchars($current); ?></span></p>
+<h2>Available themes</h2>
+<ul>
+<?php foreach ($themes as $t): ?>
+  <li><?php echo htmlspecialchars($t); ?></li>
+<?php endforeach; ?>
+  <li>original (default)</li>
+</ul>
+<p>Apply from CLI:</p>
+<pre><code>php <?php echo __DIR__ . '/../hestia_theme_manager.php'; ?> apply &lt;theme_name&gt;</code></pre>
+</body>
+</html>
+PHP;
+        file_put_contents($web_dir . '/index.php', $index);
+        chmod($web_dir . '/index.php', 0644);
+        $this->log("Created minimal web interface at " . $web_dir);
+        return true;
+    }
+    
     
     /**
      * Load configuration
@@ -410,6 +472,8 @@ class HestiaThemeManager {
     }
     
 
+
+}
 // CLI usage
 if (php_sapi_name() === 'cli') {
     $theme_manager = new HestiaThemeManager();

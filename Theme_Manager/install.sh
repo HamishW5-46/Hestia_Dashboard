@@ -17,6 +17,8 @@ HESTIA_WEB_DIR="/usr/local/hestia/web"
 THEME_DIR="$HESTIA_WEB_DIR/themes"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
+type create_web_interface >/dev/null 2>&1 || create_web_interface(){ :; }
+
 # Function to print colored output
 print_status() {
     echo -e "${GREEN}[INFO]${NC} $1"
@@ -285,7 +287,7 @@ main() {
     create_directories
     copy_plugin_files
     run_plugin_install
-    create_web_interface
+    if declare -f create_web_interface >/dev/null; then create_web_interface; fi
     create_cli_command
     create_example_theme
     setup_logrotate

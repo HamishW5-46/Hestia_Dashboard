@@ -15,6 +15,8 @@ NC='\033[0m' # No Color
 PLUGIN_DIR="/usr/local/hestia/plugins/theme-manager"
 HESTIA_WEB_DIR="/usr/local/hestia/web"
 
+type remove_web_interface >/dev/null 2>&1 || remove_web_interface(){ :; }
+
 # Function to print colored output
 print_status() {
     echo -e "${GREEN}[INFO]${NC} $1"
@@ -229,7 +231,7 @@ force_uninstall() {
     print_warning "Force uninstall mode - skipping confirmations"
     
     # Skip backup in force mode
-    remove_web_interface
+    if declare -f remove_web_interface >/dev/null; then remove_web_interface; fi
     remove_cli_command
     remove_logrotate
     
@@ -260,7 +262,7 @@ main() {
     confirm_uninstall
     backup_themes
     restore_original_theme
-    remove_web_interface
+if declare -f remove_web_interface >/dev/null; then     remove_web_interface; fi
     remove_cli_command
     remove_logrotate
     remove_plugin_directory
