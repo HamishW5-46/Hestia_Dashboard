@@ -1,7 +1,7 @@
 <?php
 /**
  * Hestia Theme Manager Plugin
- * Version: 1.0.0
+ * Version: 1.0.1
  * Description: Allows switching between different UI themes for Hestia Control Panel
  * Author: Custom Plugin
  */
